@@ -25,9 +25,10 @@
         <div class="row">
             <div class="col-md-3 py-4" id="search-area">
                 <h2>Search for a City:</h2>
-                <input id="city-input"><button id="btnSearch">
+                <input type="text" id="city-input"><button id="search-button">
                     <i class="fa fa-search"></i>
                 </button>
+                <div id="error-message"></div>
                 <div id="cities-list"></div>
             </div>
 
@@ -39,7 +40,7 @@
                     <div class="temp"></div>
                     <div class="humidity"></div>
                     <div class="wind-speed"></div>
-                    <div class="uv-index"></div>       
+                    <div class="uv-index"></div>
                 </div>
                 <br>
 
@@ -48,34 +49,14 @@
                     <div id="five-day-forecast" class="d-flex flex-row forecast">
                     </div>
                 </div>
-               
-            </div>
 
+            </div>
 
 
         </div>
 
 
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
