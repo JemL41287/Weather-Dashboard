@@ -1,0 +1,14 @@
+#header {
+    color: white;
+    background: black;
+    padding: 5px;
+}
+
+#search-area {
+    background-color: lightgray;
+}
+
+#btnSearch {
+    background-color: blue;
+    color: white;
+}
