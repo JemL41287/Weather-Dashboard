@@ -1,15 +1,16 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     var apiKey = "8bf7617a246c576097f0d958220f6d4c";
     var cityArr = [];
 
     getSearchHistory();
 
-    $("search-button").on("click", function(event) {
+
+    $("#search-button").on("click", function (event) {
 
         event.preventDefault();
 
-        var searchedCity = $("city-input").val();
+        var searchedCity = $("#city-input").val();
 
         if (!searchedCity) {
             return null;
@@ -17,35 +18,30 @@ $(document).ready(function() {
 
 
         getCurrentConditions(searchedCity)
-        .then(function(currentConditions) {
+         .then(function(currentConditions) {
 
             appendCurrentConditions(currentConditions);
         })
-        .then(function() {
+        .then(function () {
 
             saveCityToSearchHistory(searchedCity);
             getSearchHistory();
         })
-        .then(function() {
-
-            getFiveDayForecast(searchedCity)
-            .then(function(forecast) {
-
-                appendFiveDayForecast(forecast);
-            });
-        });
-
 
     });
 
     function getCurrentConditions(city) {
 
-        var queryURL = "https://openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apiKey;
 
-        return $.ajax({
+        $.ajax({
             url: queryURL,
             method: "GET"
-        });
+        }).then(function (response) {
+            console.log(queryURL);
+            console.log(response);
+        })
+
     }
 
     function appendCurrentConditions(currentConditions) {
@@ -53,7 +49,7 @@ $(document).ready(function() {
         $(".city-name").html(
             "<h3>" + currentConditions.name + " " + "(" + moment().format("L") + ")" + "</h3>"
         );
-    
+
 
 
     }
@@ -85,17 +81,6 @@ $(document).ready(function() {
             $("#cities-list").append(cityButton);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 });
