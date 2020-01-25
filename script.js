@@ -22,7 +22,7 @@ $(document).ready(function () {
 
             appendCurrentConditions(currentConditions);
         })
-        .then(function () {
+        .then(function() {
 
             saveCityToSearchHistory(searchedCity);
             getSearchHistory();
@@ -40,19 +40,36 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(queryURL);
             console.log(response);
-        })
 
+            $(".city-name").html("<h3>" + response.name + " " + "(" + moment().format("L") + ")" + " " + response.weather[0].icon + "</h3>");
+            var tempF = (response.main.temp - 273.15) * 1.8 + 32;
+            $(".temp").text("Temperature: " + tempF.toFixed(1) + "°F");
+            $(".humidity").text("Humidity: " + response.main.humidity + "%");
+            $(".wind-speed").text("Windspeed: " + response.wind.speed + " MPH");
+            var lon = response.coord.lon;
+            var lat = response.coord.lat;
+
+            uvIndex(lat, lon);
+        });
     }
 
-    function appendCurrentConditions(currentConditions) {
+    function uvIndex(lat, lon) {
+        var queryURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat=" + lat + "&lon=" + lon;
 
-        $(".city-name").html(
-            "<h3>" + currentConditions.name + " " + "(" + moment().format("L") + ")" + "</h3>"
-        );
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            var uv = response.value;
+            $(".uv-index").html("UV Index: " + '<span class="uv-index-number">' + uv + '</span');
 
 
 
+            
+
+        });
     }
+
 
     function saveCityToSearchHistory(city) {
 
