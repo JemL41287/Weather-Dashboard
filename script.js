@@ -18,15 +18,29 @@ $(document).ready(function () {
 
 
         getCurrentConditions(searchedCity)
-         .then(function(currentConditions) {
+            .then(function (currentConditions) {
 
-            appendCurrentConditions(currentConditions);
-        })
-        .then(function() {
+                clear();
+                appendCurrentConditions(currentConditions);
+            })
+            .then(function () {
 
-            saveCityToSearchHistory(searchedCity);
-            getSearchHistory();
-        })
+                saveCityToSearchHistory(searchedCity);
+                getSearchHistory();
+            })
+            .then(function () {
+
+                getFiveDayForecast(searchedCity)
+                    .then(function (forecast) {
+
+                        appendFiveDayForecast(forecast);
+                    });
+            })
+
+            .catch(function () {
+
+                return $("error-message").text("Must be a valid city");
+            });
 
     });
 
@@ -63,12 +77,30 @@ $(document).ready(function () {
             var uv = response.value;
             $(".uv-index").html("UV Index: " + '<span class="uv-index-number">' + uv + '</span');
 
-
-
-            
+            if (uv < 4) {
+                $(".uv-index-number").css({
+                    "background-color": "green",
+                    color: "white",
+                    padding: "3px"
+                });
+            } else if (uv >= 5 && uv <= 7) {
+                $(".uv-index-number").css({
+                    "background-color": "yellow",
+                    color: "black",
+                    padding: "3px"
+                });
+            } else {
+                $(".uv-index-number").css({
+                    "background-color": "red",
+                    color: "white",
+                    padding: "3px"
+                });
+            }
 
         });
     }
+
+
 
 
     function saveCityToSearchHistory(city) {
