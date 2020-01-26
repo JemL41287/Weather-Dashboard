@@ -55,7 +55,9 @@ $(document).ready(function () {
             console.log(queryURL);
             console.log(response);
 
-            $(".city-name").html("<h3>" + response.name + " " + "(" + moment().format("L") + ")" + " " + response.weather[0].icon + "</h3>");
+            $(".city-name").html("<h3>" + response.name + " " + "(" + moment().format("L") + ")"  + "</h3>");
+            var iconImg = $("<img>");
+            $(".icon-image").append(iconImg.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"));
             var tempF = (response.main.temp - 273.15) * 1.8 + 32;
             $(".temp").text("Temperature: " + tempF.toFixed(1) + "°F");
             $(".humidity").text("Humidity: " + response.main.humidity + "%");
@@ -100,7 +102,20 @@ $(document).ready(function () {
         });
     }
 
+    function getFiveDayForecast(city) {
 
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + apiKey;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(queryURL);
+            console.log(response);
+
+        });
+
+    }
 
 
     function saveCityToSearchHistory(city) {
