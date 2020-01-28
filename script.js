@@ -18,33 +18,35 @@ $(document).ready(function () {
 
 
         getCurrentConditions(searchedCity)
-            .then(function (currentConditions) {
+        // .then(function (currentConditions) {
 
-                clear();
-                appendCurrentConditions(currentConditions);
-            })
-            .then(function () {
+        //   clear();
+        //  appendCurrentConditions(currentConditions);
+        //})
+        //.then(function () {
 
-                saveCityToSearchHistory(searchedCity);
-                getSearchHistory();
-            })
-            .then(function () {
+        saveCityToSearchHistory(searchedCity);
+        getSearchHistory();
+        // })
+        // .then(function () {
 
-                getFiveDayForecast(searchedCity)
-                    .then(function (forecast) {
+        getFiveDayForecast(searchedCity)
+        //         .then(function (forecast) {
 
-                        appendFiveDayForecast(forecast);
-                    });
-            })
 
-            .catch(function () {
+        //         });
+        // })
 
-                return $("error-message").text("Must be a valid city");
-            });
+        // .catch(function () {
+
+        //     return $("error-message").text("Must be a valid city");
+        // });
 
     });
 
     function getCurrentConditions(city) {
+
+
 
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apiKey;
 
@@ -55,9 +57,9 @@ $(document).ready(function () {
             console.log(queryURL);
             console.log(response);
 
-            $(".city-name").html("<h3>" + response.name + " " + "(" + moment().format("L") + ")"  + "</h3>");
+            $(".city-name").html("<h3>" + response.name + " " + "(" + moment().format("L") + ")" + "</h3>");
             var iconImg = $("<img>");
-            $(".icon-image").append(iconImg.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"));
+            $(".icon-image").html(iconImg.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png"));
             var tempF = (response.main.temp - 273.15) * 1.8 + 32;
             $(".temp").text("Temperature: " + tempF.toFixed(1) + "°F");
             $(".humidity").text("Humidity: " + response.main.humidity + "%");
@@ -66,6 +68,9 @@ $(document).ready(function () {
             var lat = response.coord.lat;
 
             uvIndex(lat, lon);
+
+
+
         });
     }
 
@@ -113,7 +118,14 @@ $(document).ready(function () {
             console.log(queryURL);
             console.log(response);
 
+            appendFiveDayForecast(response);
+
         });
+
+    }
+
+    function appendFiveDayForecast(forecast) {
+        console.log(forecast);
 
     }
 
@@ -145,6 +157,14 @@ $(document).ready(function () {
             $("#cities-list").append(cityButton);
         }
     }
+
+    $(".city-btn").on("click", function (event) {
+        var city = $(this).attr("data-name");
+        console.log(city);
+        getCurrentConditions(city);
+
+
+    })
 
 
 });
