@@ -47,7 +47,6 @@ $(document).ready(function () {
     function getCurrentConditions(city) {
 
 
-
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apiKey;
 
         $.ajax({
@@ -118,6 +117,13 @@ $(document).ready(function () {
             console.log(queryURL);
             console.log(response);
 
+            var date = response.list[i].dt_text;
+            var formatDate = moment(date).format("L");
+            var temp = (response.list[i].main.temp_max - 273.15) * 1.8 + 32;
+            var humidity = response.list[i].main.humidity;
+            var icon = forecast.list[i].weather[0].icon;
+            var fiveDayIconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+
             appendFiveDayForecast(response);
 
         });
@@ -126,13 +132,16 @@ $(document).ready(function () {
 
     function appendFiveDayForecast(forecast) {
         console.log(forecast);
+        //for (var i = 0; i < response.list.length; i += ?) {
+
+        //};
 
     }
 
 
     function saveCityToSearchHistory(city) {
 
-        cityArr.push(city.toLowerCase());
+        cityArr.push(city);
 
         localStorage.setItem("city", JSON.stringify(cityArr));
     }
