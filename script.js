@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    
     var apiKey = "8bf7617a246c576097f0d958220f6d4c";
     var cityArr = [];
 
@@ -46,7 +47,6 @@ $(document).ready(function () {
 
     function getCurrentConditions(city) {
 
-
         var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + apiKey;
 
         $.ajax({
@@ -67,8 +67,6 @@ $(document).ready(function () {
             var lat = response.coord.lat;
 
             uvIndex(lat, lon);
-
-
 
         });
     }
@@ -114,15 +112,6 @@ $(document).ready(function () {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(queryURL);
-            console.log(response);
-
-            var date = response.list[i].dt_text;
-            var formatDate = moment(date).format("L");
-            var temp = (response.list[i].main.temp_max - 273.15) * 1.8 + 32;
-            var humidity = response.list[i].main.humidity;
-            var icon = forecast.list[i].weather[0].icon;
-            var fiveDayIconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
 
             appendFiveDayForecast(response);
 
@@ -132,9 +121,24 @@ $(document).ready(function () {
 
     function appendFiveDayForecast(forecast) {
         console.log(forecast);
-        //for (var i = 0; i < response.list.length; i += ?) {
+        for (var i = 0; i < 5; i ++) {
 
-        //};
+        var date = forecast.list[i].dt_text;
+        var formatDate = moment(date).format("L");
+        var temp = (forecast.list[i].main.temp_max - 273.15) * 1.8 + 32;
+        var humidity = forecast.list[i].main.humidity;
+        var icon = forecast.list[i].weather[0].icon;
+        var fiveDayIconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+         var newCard = $("div");
+         
+         //**************************************** */
+         //newCard.addClass("card");
+
+        //     console.log(formatDate)
+        //     newCard.text(formatDate);
+        // $("#five-day-forecast").append(newCard);
+
+        };
 
     }
 
@@ -155,6 +159,8 @@ $(document).ready(function () {
 
         cityArr = searchHistory;
 
+        
+
         $("#cities-list").empty();
 
         for (var i = 0; i < searchHistory.length; i++) {
@@ -168,12 +174,13 @@ $(document).ready(function () {
     }
 
     $(".city-btn").on("click", function (event) {
+        event.preventDefault();
         var city = $(this).attr("data-name");
         console.log(city);
         getCurrentConditions(city);
+        getFiveDayForecast(city);
+    });
 
-
-    })
 
 
 });
