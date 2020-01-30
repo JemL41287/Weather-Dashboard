@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    
+
     var apiKey = "8bf7617a246c576097f0d958220f6d4c";
     var cityArr = [];
 
@@ -121,24 +121,20 @@ $(document).ready(function () {
 
     function appendFiveDayForecast(forecast) {
         console.log(forecast);
-        for (var i = 0; i < 5; i ++) {
+        for (var i = 0; i < forecast.list.length; i += 8) {
 
-        var date = forecast.list[i].dt_text;
-        var formatDate = moment(date).format("L");
-        var temp = (forecast.list[i].main.temp_max - 273.15) * 1.8 + 32;
-        var humidity = forecast.list[i].main.humidity;
-        var icon = forecast.list[i].weather[0].icon;
-        var fiveDayIconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
-         var newCard = $("div");
-         
-         //**************************************** */
-         //newCard.addClass("card");
+            var div = $("<div>");
 
-        //     console.log(formatDate)
-        //     newCard.text(formatDate);
-        // $("#five-day-forecast").append(newCard);
+            var date = forecast.list[i].dt_txt;
+            var formatDate = moment(date).format("l");
+            var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.list[i].weather[0].icon + ".png");
+            var temp = $("<p>").text("Temp: " + ((forecast.list[i].main.temp_max - 273.15) * 1.82 + 32).toFixed(1) + "°F");
+            var humidity = $("<p>").text("Humidity: " + forecast.list[i].main.humidity + "%");
 
-        };
+            div.append(formatDate, icon, temp, humidity);
+            $("#five-day-forecast").append(div);
+
+        }
 
     }
 
@@ -159,7 +155,7 @@ $(document).ready(function () {
 
         cityArr = searchHistory;
 
-        
+
 
         $("#cities-list").empty();
 

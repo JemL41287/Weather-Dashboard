@@ -31,6 +31,8 @@ h2 {
 #five-day-forecast{
     background-color: blue;
     color: white; 
+    display: flex;
+
 }
 
 .city-btn{
