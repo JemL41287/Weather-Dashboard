@@ -29,7 +29,6 @@ h2 {
 }
 
 #five-day-forecast{
-    background-color: blue;
     color: white; 
     display: flex;
 
@@ -40,5 +39,13 @@ h2 {
     background-color: lightslategray;
     color: white;
     padding: 5px 5px 5px 5px;
+}
+
+.myCard {
+    margin-right: 25px;
+    background-color: blue;
+    padding: 5px 5px 5px 5px;
+    border-radius: 5px;
+
 }
 

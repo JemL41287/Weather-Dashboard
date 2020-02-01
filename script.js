@@ -121,9 +121,11 @@ $(document).ready(function () {
 
     function appendFiveDayForecast(forecast) {
         console.log(forecast);
+        $("#five-day-forecast").text("");
         for (var i = 0; i < forecast.list.length; i += 8) {
 
             var div = $("<div>");
+            div.attr("class", "myCard");
 
             var date = forecast.list[i].dt_txt;
             var formatDate = moment(date).format("l");
@@ -132,6 +134,7 @@ $(document).ready(function () {
             var humidity = $("<p>").text("Humidity: " + forecast.list[i].main.humidity + "%");
 
             div.append(formatDate, icon, temp, humidity);
+           
             $("#five-day-forecast").append(div);
 
         }
