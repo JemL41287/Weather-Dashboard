@@ -20,7 +20,7 @@ In this assignment, the challenge was to build a weather dashboard application w
 - Bootstrap
 - Javascript
 - jQuery
-- Moment.js API
+- Moment.js
 - OpenWeather API
 
 ## Contributers
