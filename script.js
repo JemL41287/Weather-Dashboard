@@ -19,29 +19,12 @@ $(document).ready(function () {
 
 
         getCurrentConditions(searchedCity)
-        // .then(function (currentConditions) {
-
-        //   clear();
-        //  appendCurrentConditions(currentConditions);
-        //})
-        //.then(function () {
 
         saveCityToSearchHistory(searchedCity);
         getSearchHistory();
-        // })
-        // .then(function () {
 
         getFiveDayForecast(searchedCity)
-        //         .then(function (forecast) {
 
-
-        //         });
-        // })
-
-        // .catch(function () {
-
-        //     return $("error-message").text("Must be a valid city");
-        // });
 
     });
 
@@ -129,7 +112,7 @@ $(document).ready(function () {
 
             var date = forecast.list[i].dt_txt;
             var formatDate = moment(date).format("l");
-            var icon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + forecast.list[i].weather[0].icon + ".png");
+            var icon = $("<img>").attr("src", "https://openweathermap.org/img/w/" + forecast.list[i].weather[0].icon + ".png");
             var temp = $("<p>").text("Temp: " + ((forecast.list[i].main.temp_max - 273.15) * 1.82 + 32).toFixed(1) + "°F");
             var humidity = $("<p>").text("Humidity: " + forecast.list[i].main.humidity + "%");
 
@@ -172,7 +155,7 @@ $(document).ready(function () {
         }
     }
 
-    $(".city-btn").on("click", function (event) {
+    $(document).on("click", ".city-btn", function (event) {
         event.preventDefault();
         var city = $(this).attr("data-name");
         console.log(city);
